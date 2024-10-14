@@ -1,0 +1,74 @@
+import pandas #Imports module pandas
+df = pandas.read_csv('players_22.csv')
+'''
+#Read the CSV file and stores it in the variable df
+df = pandas.read_csv('players_22.csv') #Uses panda to read the csv file
+df = pandas.read_csv('players_22.csv', sep = ',') #Separates the value using a comma
+df = pandas.read_csv('players_22.csv', header = 2) #Sets the header to 2 (displays only two headers
+df = pandas.read_csv('players_22.csv', encoding = 'ISO-8859-1') #Encodes the file to a single bit
+print(df) #Displays what is on the players_22.csv file
+'''
+'''
+#Rows and columns
+print(df.shape) #Displays the shape of the file
+print(len(df.columns)) #Displays the amount of columns there is
+print(len(df)) #Prints the amount of rows in the file
+'''
+'''
+print(df["long_name"]) #Displays data from a specific row
+print(df["club_name"]) #Retrieves the club name row
+'''
+'''
+#Row 2
+print(df.iloc[2]) #Displays Christiano Ronaldo's information
+#Row 2-5
+print(df.iloc[2:5][['short_name','club_name']]) #Gets desired range of rows
+#First 5
+print(df.iloc[:5]) #Displays the first five rows
+print(df.head()[['short_name','club_name']]) #Displays first five rows
+#Last five
+print(df.iloc[-5:][['short_name','overall','age']]) #Displays the last five rows
+print(df.tail()) #Displays the last five rows
+'''
+'''
+print(df.loc[2]) #Retrieves value with particular labels
+'''
+#initilize data of lists using a dictionary
+data = {'Name':['Tom','Jack','Nick','Juli'],'marks':[99,58,35,40]} #Makes some data
+
+#Creates pandas DataFrame.
+createdf = pandas.DataFrame(data) #Puts the data into a format (organises it)
+
+print(createdf) #Displays the data
+
+createdf.to_csv('file_name.csv') #Saves the data to a csv file
+
+#Create new row of data to be entered in dataframe
+new_row = {'Name':'Geo', 'marks':127} #A new data for row
+createdf = pandas.read_csv('file_name.csv') #Reads the csv file
+createdf.loc[len(createdf)] = new_row #Creates a new row
+print(createdf) #Displays the new row with the other rows
+#Enter the grade manually to the dataframe
+createdf['Manual Grade'] = [66,38,23,26,84] #Creates manual grade row
+print(createdf) #Displays the manual grades
+#Create column if pass/fail based on grade - Loops through all grades
+createdf['P/F'] = ['Fail' if score <40 else 'Pass' for score in createdf['Manual Grade']]
+print(createdf)
+#Returns the grade the person has got according to the marks
+
+def assign_result(row):
+    if row >= 85:
+        result = 'a'
+    elif row >= 70:
+        result = 'b'
+    elif row >= 55:
+        result = 'c'
+    elif row >= 40:
+        result = 'd'
+    elif row >= 25:
+        result = 'e'
+    else:
+        result = 'f'
+    return result
+createdf['Letter Grades'] = createdf['Manual Grade'].apply(assign_result)
+print(createdf)
